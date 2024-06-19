@@ -59,7 +59,7 @@
             catrinaY = canvas.height / 2;
             catrinaX = 50;
             gravity = 0.6;
-            lift = -10; //salto fuerza
+            lift = -10; // Reducimos la fuerza del salto
             velocity = 0;
             isGameOver = false;
             score = 0;
@@ -131,10 +131,19 @@
             }
         }
 
+        function handleJump() {
+            velocity = lift;
+        }
+
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' || e.code === 'ArrowUp') {
-                velocity = lift;
+                handleJump();
             }
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleJump();
         });
 
         startBtn.addEventListener('click', () => {
