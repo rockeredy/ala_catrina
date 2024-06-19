@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ala Catrina Challenge</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #87CEEB;
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        canvas {
+            background-color: #fff;
+            border: 1px solid #000;
+        }
+
+        #startBtn {
+            display: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #startBtn.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ala Catrina Challenge</h1>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <button id="startBtn">Start</button>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const context = canvas.getContext('2d');
+        const startBtn = document.getElementById('startBtn');
+
+        let catrinaY, catrinaX, gravity, lift, velocity, isGameOver, score, pipes;
+        const catrinaImg = new Image();
+        catrinaImg.src = 'images/alacatrina.png'; // Reemplaza con la URL correcta de la imagen
+
+        function resetGame() {
+            catrinaY = canvas.height / 2;
+            catrinaX = 50;
+            gravity = 0.6;
+            lift = -15;
+            velocity = 0;
+            isGameOver = false;
+            score = 0;
+            pipes = [];
+            startBtn.classList.remove('show');
+            update();
+        }
+
+        function draw() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(catrinaImg, catrinaX, catrinaY, 30, 30);
+            context.fillStyle = 'black';
+            context.font = '20px Arial';
+            context.fillText(`Puntuación: ${score}`, 10, 20);
+            
+            pipes.forEach(pipe => {
+                context.fillStyle = 'green';
+                context.fillRect(pipe.x, 0, pipe.width, pipe.top);
+                context.fillRect(pipe.x, canvas.height - pipe.bottom, pipe.width, pipe.bottom);
+            });
+        }
+
+        function update() {
+            if (!isGameOver) {
+                velocity += gravity;
+                catrinaY += velocity;
+                draw();
+                if (catrinaY + 30 >= canvas.height) {
+                    isGameOver = true;
+                }
+
+                pipes.forEach((pipe, index) => {
+                    pipe.x -= 2;
+
+                    // Check for collision
+                    if (
+                        (catrinaX + 30 > pipe.x && catrinaX < pipe.x + pipe.width) &&
+                        (catrinaY < pipe.top || catrinaY + 30 > canvas.height - pipe.bottom)
+                    ) {
+                        isGameOver = true;
+                    }
+
+                    // Remove off-screen pipes and update score
+                    if (pipe.x + pipe.width < 0) {
+                        pipes.splice(index, 1);
+                        score++;
+                    }
+                });
+
+                // Add new pipes
+                if (pipes.length === 0 || pipes[pipes.length - 1].x < canvas.width - 200) {
+                    let pipeGap = 120;
+                    let pipeTop = Math.random() * (canvas.height - pipeGap - 20) + 10;
+                    let pipeBottom = canvas.height - pipeGap - pipeTop;
+                    pipes.push({
+                        x: canvas.width,
+                        width: 40,
+                        top: pipeTop,
+                        bottom: pipeBottom
+                    });
+                }
+
+                requestAnimationFrame(update);
+            } else {
+                context.fillStyle = 'red';
+                context.font = '30px Arial';
+                context.fillText('Game Over', canvas.width / 2 - 70, canvas.height / 2);
+                startBtn.classList.add('show');
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
+                velocity = lift;
+            }
+        });
+
+        startBtn.addEventListener('click', () => {
+            resetGame();
+        });
+
+        // Inicialmente mostrar el botón de inicio
+        startBtn.classList.add('show');
+    </script>
+</body>
+</html>

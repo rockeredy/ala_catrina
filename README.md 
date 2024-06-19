@@ -1,0 +1,33 @@
+# Crea Tu Propio Juego de Ala Catrina
+
+## Descripción
+Este reto consiste en crear un juego simple inspirado en Flappy Bird utilizando JavaScript, donde el protagonista es una "Ala Catrina". El objetivo es proporcionar una base que puedas modificar y mejorar de manera creativa. Puedes agregar nuevas características, cambiar el estilo y hacer que el juego sea más divertido.
+
+## Instrucciones
+1. Clona este repositorio en tu máquina local.
+2. Abre el archivo `index.html` en tu navegador.
+3. Edita el archivo `game.js` para agregar tus propias funcionalidades.
+
+## Requisitos
+- El juego debe permitir al jugador controlar una "Ala Catrina" que vuela entre obstáculos.
+- Usa las teclas de flecha o la barra espaciadora para controlar la Catrina.
+- Añade una puntuación que aumente a medida que la Catrina pasa entre los obstáculos.
+
+## Bonus
+- Añade animaciones y sonidos al juego.
+- Permite que el jugador elija diferentes niveles de dificultad.
+- Crea un diseño atractivo usando CSS.
+
+## Recursos
+- [Guía para usar canvas en HTML5](https://developer.mozilla.org/es/docs/Web/API/Canvas_API/Tutorial)
+- [Guía para eventos de teclado en JavaScript](https://developer.mozilla.org/es/docs/Web/API/KeyboardEvent)
+
+## Cómo Participar
+1. Realiza un fork de este repositorio.
+2. Clona tu fork en tu máquina local.
+3. Implementa tu solución.
+4. Crea un pull request con tu solución.
+5. Comenta en el pull request explicando tu enfoque y cualquier desafío que hayas enfrentado.
+
+## Licencia
+Este proyecto está licenciado bajo la MIT License.
