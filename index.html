@@ -14,6 +14,7 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #87CEEB;
+            position: relative;
         }
 
         h1 {
@@ -30,7 +31,7 @@
             height: auto;
         }
 
-        #startBtn {
+        #startBtn, #retryBtn {
             display: none;
             padding: 10px 20px;
             font-size: 16px;
@@ -39,10 +40,10 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 20px;
+            position: absolute;
         }
 
-        #startBtn.show {
+        #startBtn.show, #retryBtn.show {
             display: block;
         }
 
@@ -51,7 +52,7 @@
                 font-size: 1.5em;
             }
 
-            #startBtn {
+            #startBtn, #retryBtn {
                 font-size: 14px;
                 padding: 8px 16px;
             }
@@ -62,10 +63,12 @@
     <h1>Ala Catrina Challenge</h1>
     <canvas id="gameCanvas" width="400" height="600"></canvas>
     <button id="startBtn">Start</button>
+    <button id="retryBtn">Reintentar</button>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const context = canvas.getContext('2d');
         const startBtn = document.getElementById('startBtn');
+        const retryBtn = document.getElementById('retryBtn');
 
         let catrinaY, catrinaX, gravity, lift, velocity, isGameOver, score, pipes;
         const catrinaImg = new Image();
@@ -80,6 +83,7 @@
             isGameOver = false;
             score = 0;
             pipes = [];
+            retryBtn.classList.remove('show');
             startBtn.classList.remove('show');
             update();
         }
@@ -142,8 +146,8 @@
             } else {
                 context.fillStyle = 'red';
                 context.font = '30px Arial';
-                context.fillText('Game Over', canvas.width / 2 - 70, canvas.height / 2);
-                startBtn.classList.add('show');
+                context.fillText('Game Over', canvas.width / 2 - 70, canvas.height / 3);
+                retryBtn.classList.add('show');
             }
         }
 
@@ -166,8 +170,19 @@
             resetGame();
         });
 
+        retryBtn.addEventListener('click', () => {
+            resetGame();
+        });
+
         // Inicialmente mostrar el botón de inicio
         startBtn.classList.add('show');
+        startBtn.style.top = '50%';
+        startBtn.style.left = '50%';
+        startBtn.style.transform = 'translate(-50%, -50%)';
+        
+        retryBtn.style.top = '50%';
+        retryBtn.style.left = '50%';
+        retryBtn.style.transform = 'translate(-50%, -50%)';
     </script>
 </body>
 </html>
